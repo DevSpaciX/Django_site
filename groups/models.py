@@ -3,7 +3,7 @@ from enum import unique
 from django.db import models
 
 def product_upload_path(obj, file):
-    return f'img_course/{obj.id}/{file}'
+    return f'product/{obj.id}/{file}'
 
 
 class Category(models.Model):
@@ -33,8 +33,9 @@ class Teacher(models.Model):
         return self.name
 
 class Student(models.Model):
-    name = models.CharField(max_length = 100 , null =True, unique=True)
-    age = models.PositiveIntegerField(default=0 , null =True, unique=True)
+    name = models.CharField(max_length = 100 , null =True)
+    surname = models.CharField(max_length = 100 , null =True, unique=True) 
+    age = models.PositiveIntegerField(default=0 , null =True)
     email = models.EmailField(max_length = 254 , null =True, unique=True)
     group = models.ForeignKey(Group, on_delete = models.SET_NULL , null =True)
 
