@@ -20,6 +20,12 @@ class CreateCourseForm(forms.Form):
             raise forms.ValidationError("Имя курса занято")
         return new_name
 
+    def clean_surname(self):
+        new_surname = self.cleaned_data['surname']
+        if Student.objects.filter(surname = new_surname):
+            raise forms.ValidationError("Фамилия занята")
+        return new_surname
+
     def create_course(self):
         group = Group.objects.create(
             name=self.cleaned_data['name'],
