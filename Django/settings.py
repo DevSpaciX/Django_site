@@ -40,6 +40,7 @@ INSTALLED_APPS = [
 
     "groups",
     "debug_toolbar",
+    "bootstrap4",
 
 ]
 
@@ -136,3 +137,11 @@ INTERNAL_IPS = [
     "127.0.0.1",
 ]
 
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'
+LOGIN_URL = '/login/'
+
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+]

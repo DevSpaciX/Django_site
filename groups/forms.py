@@ -1,6 +1,9 @@
 import email
+from itertools import product
 from tkinter.ttk import Widget
+from xml.dom import ValidationErr
 from django import forms
+from django.contrib.auth.models import User
 
 from groups.models import Category, Tag ,Group,Teacher,Student
 
@@ -9,27 +12,18 @@ class CreateCourseForm(forms.ModelForm):
         model = Group
         fields = "__all__"
 
-
-    def clean_name(self):
-        surname = self.cleaned_data['name']
-        if Group.objects.filter(name = surname ):
-            raise forms.ValidationError("Имя курса занято")
-        return surname
-
-
 class CreateStudentForm(forms.ModelForm):
     class Meta:
         model = Student
         fields = "__all__"
 
-    def clean_age(self):
-        age = self.cleaned_data['age']
-        if age < 18:
-            raise forms.ValidationError("Вам меньше 18 ! Подрастите ")
-        return age
+class LoginForm(forms.Form):
+    username = forms.CharField()
+    password = forms.CharField(widget=forms.PasswordInput())
 
-    def clean_surname(self):
-        new_surname = self.cleaned_data['surname']
-        if Student.objects.filter(surname = new_surname):
-            raise forms.ValidationError("Фамилия занята")
-        return new_surname
+    def clean(self):
+        self.user = User.objects.filter(username=self.cleaned_data['username']).first()
+        if self.user and self.user.check_password(self.cleaned_data['password']):
+            return self.cleaned_data
+        else:
+            raise forms.ValidationError('Username or password is wrong!')
