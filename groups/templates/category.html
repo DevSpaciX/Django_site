@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="row">
+  {% for group in object_list %}
+    {%if group.mentor%}
+    <div class="col-md-3">
+        <div class="card" style="margin-bottom: 10px;">
+          {% if group.image %}
+            <img src="{{ group.image.url }}" style="max-height: 120px;" class="card-img-top" alt="...">
+          {% endif %}
+          <div class="card-body">
+            <h5 class="card-title">{{ group.name }}</h5>
+            <p class="card-text">{{ group.description }}</p>
+            <a href="#">Ментор  - {{ group.mentor.name }}</a><br>
+            {% for tag in group.tags.all %}
+            <a href="#">#{{ tag.name }}</a>
+                {% if not forloop.last %}, {% endif %}
+            {% endfor %}
+            </p>
+            <a href="#" class="btn btn-success">Записаться </a>
+            <a href="{% url 'course:edit' group_id=group.id %}" class="btn btn-info">Изменить</a>
+          </div>
+        </div>
+    </div>
+    {% endif %}
+    {% endfor %}
+{% endblock content %}  

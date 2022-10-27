@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% load bootstrap4 %}
+{% block content %}
+<div class="container" >
+  <br>
+  <div class="row">
+    {% for person in object_list %}
+      
+      <div class="col-md-3 ">
+          <div class="card" style="margin-bottom: 12px;">
+            <div class="card text-white bg-info " style="max-width: 18rem;">
+                <div class="card-header"><h5>{{person.name}} - {{person.surname}}</h5></div>
+                <div class="card-body">
+                  <h6 class="card-title">Age : {{person.age}}</h6>
+                  <h6 class="card-title">Email : {{person.email}}</h6>
+                  <p class="card-text">{{person.name}} - {{person.surname}}, сейчас находится в группе {{person.group}}</p>
+                </div>
+              <a href="{% url 'edit_student' student_id=person.id %}" class="btn btn-success" style="padding: bottom 10px;">Изменить</a>
+            </div>
+          </div>
+      </div>
+      {% endfor %}
+  </div>
+  {% include 'includes/paginator.html' %}
+  <!-- <div class="pagination">
+      <span class="step-links">
+          {% if page_obj.has_previous %}
+              <a href="?page=1">&laquo; first</a>
+              <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+          {% endif %}
+          <span class="current">
+              Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+          </span>
+          {% if page_obj.has_next %}
+              <a href="?page={{ page_obj.next_page_number }}">next</a>
+              <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+          {% endif %}
+      </span>
+  </div> -->
+{% endblock content %}
