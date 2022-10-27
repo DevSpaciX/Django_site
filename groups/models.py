@@ -1,3 +1,4 @@
+from ast import Mod
 import email
 from enum import unique
 from wsgiref.validate import validator
@@ -20,6 +21,7 @@ class Group(models.Model):
     image = models.ImageField(upload_to=product_upload_path,null =True)
     description = models.TextField(max_length = 200,null =True)
     tags = models.ManyToManyField("groups.Tag")
+    rating = models.PositiveIntegerField(default=0 , null =True,validators=[MinValueValidator(0), MaxValueValidator(5)])
     categories = models.ForeignKey(Category,on_delete = models.SET_NULL,null =True)
     mentor = models.ForeignKey("groups.Teacher" , on_delete = models.PROTECT ,null = True)
 

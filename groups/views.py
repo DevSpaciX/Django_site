@@ -17,7 +17,7 @@ from django.views.generic import TemplateView, ListView ,RedirectView, FormView 
 class IndexView(ListView):
     template_name = 'index.html'
     model = Group
-    paginate_by = 10
+    paginate_by = 8
 
     def get_queryset(self):
         queryset = super(IndexView, self).get_queryset()
@@ -32,7 +32,7 @@ class GroupByCategory(ListView):
 
     template_name = 'category.html'
     model = Group
-    paginate_by = 10
+    paginate_by = 5
 
     def get_queryset(self):
         return Group.objects.filter(categories_id=self.kwargs["categories_id"]).select_related(
